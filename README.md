@@ -17,6 +17,10 @@ enum class NetworkErrorKind {
 };
 ```
 ```cpp
+#include "err_fusion.h"
+
+using namespace wingmann;
+
 err_fusion::Result<int, err_fusion::Error<NetworkErrorKind>> get_error()
 {
     return err_fusion::Error{NetworkErrorKind::NotFound};
@@ -28,11 +32,7 @@ err_fusion::Result<int, err_fusion::Error<NetworkErrorKind>> get_correct()
 }
 ```
 ```cpp
-#include "err_fusion.h"
-
 #include <iostream>
-
-using namespace wingmann;
 
 int main()
 {
