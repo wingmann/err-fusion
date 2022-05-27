@@ -1,38 +1,71 @@
 #ifndef WINGMANN_ERR_FUSION_RESULT_H
 #define WINGMANN_ERR_FUSION_RESULT_H
 
-#include <optional>
+#include "error.h"
 
 namespace wingmann::err_fusion {
 
 template<typename T, typename E>
 class Result {
-    std::optional<T> result_;
-    std::optional<E> error_;
+    T value_;
+    E error_;
+    bool is_valid_{};
+
+private:
+    Result() = default;
 
 public:
-    Result() = delete;
-
-    Result(T result)
+    static Result ok(T value)
     {
-        result_ = result;
-        error_ = std::nullopt;
+        Result box;
+        box.value_ = value;
+        box.is_valid_ = true;
+        return box;
     }
 
-    Result(E error)
+    static Result error(E error_value)
     {
-        error_ = error;
-        result_ = std::nullopt;
+        Result box;
+        box.error_ = error_value;
+        box.is_valid_ = false;
+        return box;
     }
-
-    virtual ~Result() = default;
 
 public:
-    explicit operator bool() { return result_.has_value(); }
+    explicit operator bool() const
+    {
+        return is_valid_;
+    }
 
-    std::optional<T> get() { return *result_; }
-    std::optional<E> get_error() { return *error_; }
+    T get() const
+    {
+        return value_;
+    }
+
+    E get_error() const
+    {
+        return error_;
+    }
+
+    template<typename F> inline
+    auto bind(F f) -> decltype(f(value_))
+    {
+        using type = decltype(f(value_));
+        return (*this ? f(value_) : type::error(error_));
+    }
 };
+
+template<typename T, typename E> inline
+Result<T, E> Ok(T value)
+{
+    return Result<T, E>::ok(value);
+}
+
+template<typename T, typename E> inline
+Result<T, E> Err(E error_value)
+{
+    return Result<T, E>::error(error_value);
+}
 
 } // namespace wingmann::err_fusion
 

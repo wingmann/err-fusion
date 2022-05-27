@@ -1,5 +1,5 @@
 # ErrFusion
-Error handler for modern C++
+error handler for modern C++
 
 ### About
 A simple implementation of an error handler that does not use exceptions.
@@ -11,49 +11,45 @@ It is preferable to use enumerations to create an error type.
 ### Examples
 
 ```cpp
-enum class NetworkErrorKind {
-    NotFound,
-    Disconnected
-};
-```
-```cpp
 #include "err_fusion.h"
+#include "error_kind.h"
 
-using namespace wingmann;
-
-err_fusion::Result<int, err_fusion::Error<NetworkErrorKind>> get_error()
-{
-    return err_fusion::Error{NetworkErrorKind::NotFound};
-}
-
-err_fusion::Result<int, err_fusion::Error<NetworkErrorKind>> get_correct()
-{
-    return 8080;
-}
-```
-```cpp
 #include <iostream>
+
+using namespace wingmann::err_fusion;
+using namespace wingmann::err_fusion::error_kind;
+
+auto get_error()
+{
+    return Err<int, io::IOError>(io::IOError::NotFound);
+}
+
+auto get_correct()
+{
+    return Ok<int, io::IOError>(8080);
+}
 
 int main()
 {
     auto result = get_error();
     if (!result) {
-        switch (result.get_error().value().get()) {
-        case NetworkErrorKind::NotFound:
+        switch (result.get_error()) {
+        case io::IOError::NotFound:
             std::cout << "Resource not found";
             break;
-        case NetworkErrorKind::Disconnected:
-            std::cout << "Disconnected";
+        case io::IOError::PermissionDenied:
+            std::cout << "Permission denied";
+            break;
+        default:
+            std::cout << "Other error";
             break;
         }
     }
     
     result = get_correct();
     if (result) {
-        std::cout << result.get().value();
+        std::cout << result.get();
     }
-    
-    
     return 0;
 }
 ```

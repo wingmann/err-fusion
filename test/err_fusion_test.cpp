@@ -1,35 +1,32 @@
 #include "err_fusion.h"
+#include "error_kind.h"
 
 #include "gtest/gtest.h"
 
-using namespace wingmann;
+using namespace wingmann::err_fusion;
+using namespace wingmann::err_fusion::error_kind;
 
-enum class NetworkErrorKind {
-    NotFound,
-    Disconnected
-};
-
-err_fusion::Result<int, err_fusion::Error<NetworkErrorKind>> get_error()
+auto get_error()
 {
-    return err_fusion::Error{NetworkErrorKind::NotFound};
+    return Err<int, io::IOError>(io::IOError::NotFound);
 }
 
-err_fusion::Result<int, err_fusion::Error<NetworkErrorKind>> get_correct()
+auto get_correct()
 {
-    return 8080;
+    return Ok<int, io::IOError>(8080);
 }
 
-TEST(err_fusion, common_1)
+TEST(err_fusion, error)
 {
     auto result = get_error();
     int expected_error;
 
     if (!result) {
-        switch (result.get_error().value().get()) {
-        case NetworkErrorKind::NotFound:
+        switch (result.get_error()) {
+        case io::IOError::NotFound:
             expected_error = 0;
             break;
-        case NetworkErrorKind::Disconnected:
+        case io::IOError::PermissionDenied:
             expected_error = 1;
             break;
         default:
@@ -40,10 +37,9 @@ TEST(err_fusion, common_1)
     EXPECT_EQ(expected_error, 0);
 }
 
-TEST(err_fusion, common_2)
+TEST(err_fusion, correct)
 {
     auto result = get_correct();
-
     if (result)
-        EXPECT_EQ(8080, result.get().value());
+        EXPECT_EQ(8080, result.get());
 }

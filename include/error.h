@@ -9,7 +9,7 @@ class Error {
 
 public:
     Error() = delete;
-    Error(E error) { error_ = error; }
+    explicit Error(E error) { error_ = error; }
     virtual ~Error() = default;
 
 public:
