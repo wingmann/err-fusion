@@ -1,5 +1,5 @@
 # ErrFusion
-error handler for modern C++
+Error handler for modern C++
 
 ### About
 A simple implementation of an error handler that does not use exceptions.
