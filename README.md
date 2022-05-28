@@ -21,12 +21,12 @@ using namespace wingmann::err_fusion::error_kind;
 
 auto get_error()
 {
-    return Err<int, io::IOError>(io::IOError::NotFound);
+    return err<int, io::IOError>(io::IOError::NotFound);
 }
 
 auto get_correct()
 {
-    return Ok<int, io::IOError>(8080);
+    return ok<int, io::IOError>(8080);
 }
 
 int main()
