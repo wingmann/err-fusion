@@ -3,32 +3,34 @@
 
 #include "error.h"
 
+#include <string>
+
 namespace wingmann::err_fusion {
 
-template<typename T, typename E>
+template<typename T, typename E, typename ErrorWrapper = Error<E>>
 class Result {
     T value_;
-    E error_;
-    bool is_valid_{};
+    ErrorWrapper error_;
+    bool is_valid_;
 
 private:
-    Result() = default;
+    explicit Result(T value) : value_{value}, is_valid_{true} { }
+    explicit Result(E error_value) : error_{error_value}, is_valid_{} { }
 
 public:
     static Result ok(T value)
     {
-        Result box;
-        box.value_ = value;
-        box.is_valid_ = true;
-        return box;
+        return Result{value};
     }
 
     static Result error(E error_value)
     {
-        Result box;
-        box.error_ = error_value;
-        box.is_valid_ = false;
-        return box;
+        return Result{error_value};
+    }
+
+    static Result error(E error_value, const std::string& message)
+    {
+        return Result{error_value, message};
     }
 
 public:
@@ -44,7 +46,7 @@ public:
 
     E get_error() const
     {
-        return error_;
+        return static_cast<Error<E>>(error_).get();
     }
 
     template<typename F> inline
@@ -55,16 +57,16 @@ public:
     }
 };
 
-template<typename T, typename E> inline
-Result<T, E> Ok(T value)
+template<typename T, typename E, typename ErrorWrapper = Error<E>>
+inline Result<T, E, ErrorWrapper> ok(T value)
 {
-    return Result<T, E>::ok(value);
+    return Result<T, E, ErrorWrapper>::ok(value);
 }
 
-template<typename T, typename E> inline
-Result<T, E> Err(E error_value)
+template<typename T, typename E, typename ErrorWrapper = Error<E>>
+inline Result<T, E, ErrorWrapper> err(E error_value)
 {
-    return Result<T, E>::error(error_value);
+    return Result<T, E, ErrorWrapper>::error(error_value);
 }
 
 } // namespace wingmann::err_fusion

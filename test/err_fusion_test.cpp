@@ -8,33 +8,34 @@ using namespace wingmann::err_fusion::error_kind;
 
 auto get_error()
 {
-    return Err<int, io::IOError>(io::IOError::NotFound);
+    return err<int, io::IOError>(io::IOError::PermissionDenied);
 }
 
 auto get_correct()
 {
-    return Ok<int, io::IOError>(8080);
+    return ok<int, io::IOError>(8080);
 }
 
 TEST(err_fusion, error)
 {
-    auto result = get_error();
-    int expected_error;
+    std::string actual;
+    const std::string expected = "Permission denied";
 
+    auto result = get_error();
     if (!result) {
         switch (result.get_error()) {
         case io::IOError::NotFound:
-            expected_error = 0;
+            actual = "Not found";
             break;
         case io::IOError::PermissionDenied:
-            expected_error = 1;
+            actual = "Permission denied";
             break;
         default:
-            expected_error = 2;
+            actual = "Other error";
             break;
         }
     }
-    EXPECT_EQ(expected_error, 0);
+    EXPECT_EQ(expected, actual);
 }
 
 TEST(err_fusion, correct)
