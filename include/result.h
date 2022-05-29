@@ -28,11 +28,6 @@ public:
         return Result{error_value};
     }
 
-    static Result error(E error_value, const std::string& message)
-    {
-        return Result{error_value, message};
-    }
-
 public:
     explicit operator bool() const
     {
