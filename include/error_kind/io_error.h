@@ -1,7 +1,7 @@
 #ifndef WINGMANN_ERR_FUSION_INCLUDE_ERROR_KIND_IO_ERROR_H
 #define WINGMANN_ERR_FUSION_INCLUDE_ERROR_KIND_IO_ERROR_H
 
-namespace wingmann::err_fusion::error_kind::io {
+namespace wingmann::ef::err_kind {
 
 enum class IOError {
     NotFound,
@@ -46,6 +46,6 @@ enum class IOError {
     Other
 };
 
-} // namespace wingmann::err_fusion::error::io
+} // namespace wingmann::ef::err_kind
 
 #endif //WINGMANN_ERR_FUSION_INCLUDE_ERROR_KIND_IO_ERROR_H

@@ -3,17 +3,17 @@
 
 #include "gtest/gtest.h"
 
-using namespace wingmann::err_fusion;
-using namespace wingmann::err_fusion::error_kind;
+using namespace wingmann::ef;
+using namespace wingmann::ef::err_kind;
 
-auto get_error()
+auto get_an_error()
 {
-    return err<int, io::IOError>(io::IOError::PermissionDenied);
+    return err<int, IOError>(IOError::PermissionDenied);
 }
 
-auto get_correct()
+auto get_correct_value()
 {
-    return ok<int, io::IOError>(8080);
+    return ok<int, IOError>(8080);
 }
 
 TEST(err_fusion, error)
@@ -21,13 +21,13 @@ TEST(err_fusion, error)
     std::string actual;
     const std::string expected = "Permission denied";
 
-    auto result = get_error();
+    auto result = get_an_error();
     if (!result) {
         switch (result.get_error()) {
-        case io::IOError::NotFound:
+        case IOError::NotFound:
             actual = "Not found";
             break;
-        case io::IOError::PermissionDenied:
+        case IOError::PermissionDenied:
             actual = "Permission denied";
             break;
         default:
@@ -40,7 +40,7 @@ TEST(err_fusion, error)
 
 TEST(err_fusion, correct)
 {
-    auto result = get_correct();
+    auto result = get_correct_value();
     if (result)
         EXPECT_EQ(8080, result.get());
 }

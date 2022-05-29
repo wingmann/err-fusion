@@ -5,12 +5,12 @@
 
 #include <string>
 
-namespace wingmann::err_fusion {
+namespace wingmann::ef {
 
-template<typename T, typename E, typename ErrorWrapper = Error<E>>
+template<typename T, typename E, typename EWrapper = Error<E>>
 class Result {
     T value_;
-    ErrorWrapper error_;
+    EWrapper error_;
     bool is_valid_;
 
 private:
@@ -57,18 +57,18 @@ public:
     }
 };
 
-template<typename T, typename E, typename ErrorWrapper = Error<E>>
-inline Result<T, E, ErrorWrapper> ok(T value)
+template<typename T, typename E, typename EWrapper = Error<E>>
+inline Result<T, E, EWrapper> ok(T value)
 {
-    return Result<T, E, ErrorWrapper>::ok(value);
+    return Result<T, E, EWrapper>::ok(value);
 }
 
-template<typename T, typename E, typename ErrorWrapper = Error<E>>
-inline Result<T, E, ErrorWrapper> err(E error_value)
+template<typename T, typename E, typename EWrapper = Error<E>>
+inline Result<T, E, EWrapper> err(E error_value)
 {
-    return Result<T, E, ErrorWrapper>::error(error_value);
+    return Result<T, E, EWrapper>::error(error_value);
 }
 
-} // namespace wingmann::err_fusion
+} // namespace wingmann::ef
 
 #endif // WINGMANN_ERR_FUSION_RESULT_H

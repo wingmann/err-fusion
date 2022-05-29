@@ -16,28 +16,28 @@ It is preferable to use enumerations to create an error type.
 
 #include <iostream>
 
-using namespace wingmann::err_fusion;
-using namespace wingmann::err_fusion::error_kind;
+using namespace wingmann::ef;
+using namespace wingmann::ef::err_kind;
 
-auto get_error()
+auto get_an_error()
 {
-    return err<int, io::IOError>(io::IOError::NotFound);
+    return err<int, IOError>(IOError::NotFound);
 }
 
-auto get_correct()
+auto get_correct_value()
 {
-    return ok<int, io::IOError>(8080);
+    return ok<int, IOError>(8080);
 }
 
 int main()
 {
-    auto result = get_error();
+    auto result = get_an_error();
     if (!result) {
         switch (result.get_error()) {
-        case io::IOError::NotFound:
+        case IOError::NotFound:
             std::cout << "Resource not found";
             break;
-        case io::IOError::PermissionDenied:
+        case IOError::PermissionDenied:
             std::cout << "Permission denied";
             break;
         default:
@@ -46,7 +46,7 @@ int main()
         }
     }
     
-    result = get_correct();
+    result = get_correct_value();
     if (result) {
         std::cout << result.get();
     }
