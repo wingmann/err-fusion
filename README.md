@@ -8,6 +8,9 @@ It is possible to check when a value is returned from a function with operator b
 Accordingly, if operator bool returns false, you can get an error using the get_error method.
 It is preferable to use enumerations to create an error type.
 
+Currently under development and not intended for use in real projects,
+because it does not support working with references and pointers.
+
 ### Examples
 
 ```cpp
