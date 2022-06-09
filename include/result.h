@@ -53,13 +53,13 @@ public:
 };
 
 template<typename T, typename E, typename EWrapper = Error<E>>
-inline Result<T, E, EWrapper> ok(T value)
+Result<T, E, EWrapper> ok(T value)
 {
     return Result<T, E, EWrapper>::ok(value);
 }
 
 template<typename T, typename E, typename EWrapper = Error<E>>
-inline Result<T, E, EWrapper> err(E error_value)
+Result<T, E, EWrapper> err(E error_value)
 {
     return Result<T, E, EWrapper>::error(error_value);
 }
