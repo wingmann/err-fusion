@@ -35,24 +35,30 @@ auto get_correct_value()
 int main()
 {
     auto result = get_an_error();
-    if (!result) {
-        switch (result.get_error()) {
-        case IOError::NotFound:
-            std::cout << "Resource not found";
-            break;
-        case IOError::PermissionDenied:
-            std::cout << "Permission denied";
-            break;
-        default:
-            std::cout << "Other error";
-            break;
+    
+    if (!result)
+    {
+        switch (result.get_error())
+        {
+            case IOError::NotFound:
+                std::cout << "Resource not found";
+                break;
+            case IOError::PermissionDenied:
+                std::cout << "Permission denied";
+                break;
+            default:
+                std::cout << "Other error";
+                break;
         }
     }
     
     result = get_correct_value();
-    if (result) {
+    
+    if (result)
+    {
         std::cout << result.get();
     }
+    
     return 0;
 }
 ```
