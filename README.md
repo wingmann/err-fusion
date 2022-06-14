@@ -5,58 +5,54 @@ Error handler for modern C++
 A simple implementation of an error handler that does not use exceptions.
 It is based on two possible situations: you can return both an error and a valid value from the function.
 It is possible to check when a value is returned from a function with operator bool.
-Accordingly, if operator bool returns false, you can get an error using the get_error method.
+Accordingly, if operator bool returns false, you can get an error using the GetError method.
 It is preferable to use enumerations to create an error type.
-
-Currently under development and not intended for use in real projects,
-because it does not support working with references and pointers.
 
 ### Examples
 
 ```cpp
-#include "err_fusion.h"
-#include "error_kind.h"
+#include "ErrFusion.h"
 
 #include <iostream>
 
-using namespace wingmann::ef;
-using namespace wingmann::ef::err_kind;
+using namespace Wingmann::ErrFusion;
+using namespace Wingmann::ErrFusion::ErrorKind;
 
-auto get_an_error()
+Result<int, IoError> GetAnError()
 {
-    return err<int, IOError>(IOError::NotFound);
+    return Err<int, IoError>{ IoError::PermissionDenied };
 }
 
-auto get_correct_value()
+Result<int, IoError> GetCorrectValue()
 {
-    return ok<int, IOError>(8080);
+    return Ok<int, IoError>{ 8080 };
 }
 
 int main()
 {
-    auto result = get_an_error();
+    auto result = GetAnError();
     
     if (!result)
     {
-        switch (result.get_error())
+        switch (result.GetError())
         {
-            case IOError::NotFound:
-                std::cout << "Resource not found";
+            case IoError::NotFound:
+                std::cerr << "Resource not found";
                 break;
-            case IOError::PermissionDenied:
-                std::cout << "Permission denied";
+            case IoError::PermissionDenied:
+                std::cerr << "Permission denied";
                 break;
             default:
-                std::cout << "Other error";
+                std::cerr << "Other error";
                 break;
         }
     }
     
-    result = get_correct_value();
+    result = GetCorrectValue();
     
     if (result)
     {
-        std::cout << result.get();
+        std::cout << result.GetValue();
     }
     
     return 0;
