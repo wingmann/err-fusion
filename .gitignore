@@ -35,5 +35,6 @@
 .idea/
 .vs/
 build/
+cmake-build-debug/
 out/
 lib/

@@ -1,5 +1,4 @@
 #include "ErrFusion.h"
-#include "ErrorKind.h"
 
 #include "gtest/gtest.h"
 

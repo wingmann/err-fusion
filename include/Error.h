@@ -1,27 +1,35 @@
-#ifndef WINGMANN_ERR_FUSION_ERROR_H
-#define WINGMANN_ERR_FUSION_ERROR_H
+#ifndef WINGMANN_ERRFUSION_ERROR_H
+#define WINGMANN_ERRFUSION_ERROR_H
 
-#include "error_wrapper.h"
+#include "ErrorWrapper.h"
 
 #include <string>
 #include <utility>
 
-namespace wingmann::ef {
+namespace Wingmann::ErrFusion
+{
+	template<typename E>
+	class Error : public ErrorWrapper<E>
+	{
+	private:
+		E error_{};
 
-template<typename E>
-class Error : public ErrorWrapper<E> {
-    E error_{};
+	public:
+		Error() = default;
 
-public:
-    Error() = default;
-    explicit Error(E error_value) { error_ = error_value; }
-    
-    ~Error() override = default;
+		explicit Error(E error_value)
+		{
+			error_ = error_value;
+		}
 
-public:
-    E get() override { return error_; }
-};
+		~Error() override = default;
 
-} // namespace wingmann::ef
+	public:
+		E Get() override
+		{
+			return error_;
+		}
+	};
+}
 
-#endif // WINGMANN_ERR_FUSION_ERROR_H
+#endif // WINGMANN_ERRFUSION_ERROR_H

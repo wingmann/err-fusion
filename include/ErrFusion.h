@@ -1,7 +1,9 @@
-#ifndef WINGMANN_ERR_FUSION_ERR_FUSION_H
-#define WINGMANN_ERR_FUSION_ERR_FUSION_H
+#ifndef WINGMANN_ERRFUSION_H
+#define WINGMANN_ERRFUSION_H
 
-#include "ok.h"
-#include "err.h"
+#include "Ok.h"
+#include "Err.h"
 
-#endif // WINGMANN_ERR_FUSION_ERR_FUSION_H
+#include "ErrorKind.h"
+
+#endif // WINGMANN_ERRFUSION_H
