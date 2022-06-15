@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.20)
-project(ErrFusion)
+project(err_fusion)
 
 add_subdirectory(src)
 
