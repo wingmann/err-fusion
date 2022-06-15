@@ -31,7 +31,7 @@ auto get_correct_value()
 int main()
 {
     if (auto result = get_an_error(); !result) {
-        switch (result.GetError()) {
+        switch (result.get_error()) {
         case IOError::NotFound:
             std::cerr << "Resource not found";
             break;
