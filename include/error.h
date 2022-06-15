@@ -9,13 +9,13 @@
 namespace wingmann::ef {
 
 template<typename E>
-class Error : public ErrorWrapper<E> {
+class error : public error_wrapper<E> {
 	E error_{};
 
 public:
-	Error() = default;
-	explicit Error(E error_value) : error_{error_value} { }
-	~Error() override = default;
+	error() = default;
+	explicit error(E error_value) : error_{ error_value} { }
+	~error() override = default;
 
 public:
 	E get() override { return error_; }

@@ -1,5 +1,5 @@
 # ErrFusion
-Error handler for modern C++
+error handler for modern C++
 
 ### About
 A simple implementation of an error handler that does not use exceptions.
@@ -18,24 +18,21 @@ It is preferable to use enumerations to create an error type.
 using namespace wingmann::ef;
 using namespace wingmann::ef::err_kind;
 
-auto get_an_error()
-{
-    return Err<int, IOError>{IoError::PermissionDenied};
-}
+auto get_an_error = []() {
+    return err<int, io_error>{io_error::permission_denied};
+};
 
-auto get_correct_value()
-{
-    return Ok<int, IOError>{8080};
-}
+auto get_correct_value = []() {
+    return ok<int, io_error>{8080};
+};
 
-int main()
-{
-    if (auto result = get_an_error(); !result) {
-        switch (result.get_error()) {
-        case IOError::NotFound:
+int main() {
+    if (auto res = get_an_error(); !res) {
+        switch (res.get_error()) {
+        case io_error::not_found:
             std::cerr << "Resource not found";
             break;
-        case IOError::PermissionDenied:
+        case io_error::permission_denied:
             std::cerr << "Permission denied";
             break;
         default:
@@ -44,8 +41,8 @@ int main()
         }
     }
     
-    if (auto result = get_correct_value(); result) {
-        std::cout << result.get_value();
+    if (auto res = get_correct_value(); res) {
+        std::cout << res.get_value();
     }
     return 0;
 }

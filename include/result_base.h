@@ -6,7 +6,11 @@
 namespace wingmann::ef {
 
 template<typename T, typename E>
-class ResultBase {
+class result_base {
+public:
+	result_base() = default;
+	virtual ~result_base() = default;
+
 public:
 	virtual explicit operator bool() const = 0;
 

@@ -5,11 +5,11 @@
 
 namespace wingmann::ef {
 
-template<typename T, typename E, typename EWrapper = Error<E>>
-class Err : public Result<T, E, EWrapper> {
+template<typename T, typename E, typename EWrapper = error<E>>
+class err final : public result<T, E, EWrapper> {
 public:
-	explicit Err(E errorValue) : Result<T, E, EWrapper>(T{}, errorValue, false) { }
-	~Err() override = default;
+	explicit err(E error_value) : result<T, E, EWrapper>{T{}, error_value, false} { }
+	~err() final = default;
 };
 
 } // namespace wingmann::ef

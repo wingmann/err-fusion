@@ -5,27 +5,27 @@
 using namespace wingmann::ef;
 using namespace wingmann::ef::err_kind;
 
-Result<int, IOError> get_an_error()
+auto get_an_error = []()
 {
-	return Err<int, IOError>{IOError::PermissionDenied};
-}
+	return err<int, io_error>{io_error::permission_denied};
+};
 
-Result<int, IOError> get_correct_value()
+auto get_correct_value = []()
 {
-	return Ok<int, IOError>{8080};
-}
+	return ok<int, io_error>{8080};
+};
 
 TEST(err_fusion, handling_error_value)
 {
 	std::string actual;
 	std::string expected = "Permission denied";
 
-	if (auto result = get_an_error(); !result) {
-		switch (result.get_error()) {
-		case IOError::NotFound:
+	if (auto res = get_an_error(); !res) {
+		switch (res.get_error()) {
+		case io_error::not_found:
 			actual = "Not found";
 			break;
-		case IOError::PermissionDenied:
+		case io_error::permission_denied:
 			actual = "Permission denied";
 			break;
 		default:
@@ -38,7 +38,7 @@ TEST(err_fusion, handling_error_value)
 
 TEST(err_fusion, using_correct_value)
 {
-	if (auto result = get_correct_value(); result) {
-		EXPECT_EQ(8080, result.get_value());
+	if (auto res = get_correct_value(); res) {
+		EXPECT_EQ(8080, res.get_value());
 	}
 }

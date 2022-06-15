@@ -4,10 +4,10 @@
 namespace wingmann::ef {
 
 template<typename E>
-class ErrorWrapper {
+class error_wrapper {
 public:
-	ErrorWrapper() = default;
-	virtual ~ErrorWrapper() = default;
+	error_wrapper() = default;
+	virtual ~error_wrapper() = default;
 
 public:
 	virtual E get() = 0;
