@@ -11,50 +11,42 @@ It is preferable to use enumerations to create an error type.
 ### Examples
 
 ```cpp
-#include "ErrFusion.h"
+#include "err_fusion.h"
 
 #include <iostream>
 
-using namespace Wingmann::ErrFusion;
-using namespace Wingmann::ErrFusion::ErrorKind;
+using namespace wingmann::ef;
+using namespace wingmann::ef::err_kind;
 
-Result<int, IoError> GetAnError()
+auto get_an_error()
 {
-    return Err<int, IoError>{ IoError::PermissionDenied };
+    return Err<int, IOError>{IoError::PermissionDenied};
 }
 
-Result<int, IoError> GetCorrectValue()
+auto get_correct_value()
 {
-    return Ok<int, IoError>{ 8080 };
+    return Ok<int, IOError>{8080};
 }
 
 int main()
 {
-    auto result = GetAnError();
-    
-    if (!result)
-    {
-        switch (result.GetError())
-        {
-            case IoError::NotFound:
-                std::cerr << "Resource not found";
-                break;
-            case IoError::PermissionDenied:
-                std::cerr << "Permission denied";
-                break;
-            default:
-                std::cerr << "Other error";
-                break;
+    if (auto result = get_an_error(); !result) {
+        switch (result.GetError()) {
+        case IOError::NotFound:
+            std::cerr << "Resource not found";
+            break;
+        case IOError::PermissionDenied:
+            std::cerr << "Permission denied";
+            break;
+        default:
+            std::cerr << "Other error";
+            break;
         }
     }
     
-    result = GetCorrectValue();
-    
-    if (result)
-    {
-        std::cout << result.GetValue();
+    if (auto result = get_correct_value(); result) {
+        std::cout << result.get_value();
     }
-    
     return 0;
 }
 ```

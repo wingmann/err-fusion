@@ -1,0 +1,6 @@
+#ifndef WINGMANN_ERR_FUSION_ERROR_KIND_H
+#define WINGMANN_ERR_FUSION_ERROR_KIND_H
+
+#include "error_kind/io_error.h"
+
+#endif // WINGMANN_ERR_FUSION_ERROR_KIND_H
