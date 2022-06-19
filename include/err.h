@@ -8,8 +8,8 @@ namespace wingmann::ef {
 template<typename T, typename E, typename EWrapper = error<E>>
 class err final : public result<T, E, EWrapper> {
 public:
-	explicit err(E error_value) : result<T, E, EWrapper>{T{}, error_value, false} { }
-	~err() final = default;
+    explicit err(E error_value) : result<T, E, EWrapper>{T{}, error_value, false} {}
+    ~err() final = default;
 };
 
 } // namespace wingmann::ef

@@ -27,8 +27,8 @@ auto get_correct_value = []() {
 };
 
 int main() {
-    if (auto res = get_an_error(); !res) {
-        switch (res.get_error()) {
+    if (auto value = get_an_error(); !value) {
+        switch (value.get_error()) {
         case io_error::not_found:
             std::cerr << "Resource not found";
             break;
@@ -41,8 +41,8 @@ int main() {
         }
     }
     
-    if (auto res = get_correct_value(); res) {
-        std::cout << res.get_value();
+    if (auto value = get_correct_value(); value) {
+        std::cout << value.get_value();
     }
     return 0;
 }

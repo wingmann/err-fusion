@@ -8,15 +8,15 @@ namespace wingmann::ef {
 template<typename T, typename E>
 class result_base {
 public:
-	result_base() = default;
-	virtual ~result_base() = default;
+    result_base() = default;
+    virtual ~result_base() = default;
 
 public:
-	virtual explicit operator bool() const = 0;
+    virtual explicit operator bool() const = 0;
 
 public:
-	virtual T get_value() const = 0;
-	virtual E get_error() const = 0;
+    virtual T get_value() const = 0;
+    virtual E get_error() const = 0;
 };
 
 } // namespace wingmann::ef

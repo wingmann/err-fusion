@@ -6,11 +6,11 @@ namespace wingmann::ef {
 template<typename E>
 class error_wrapper {
 public:
-	error_wrapper() = default;
-	virtual ~error_wrapper() = default;
+    error_wrapper() = default;
+    virtual ~error_wrapper() = default;
 
 public:
-	virtual E get() = 0;
+    virtual E get() = 0;
 };
 
 } // namespace wingmann::ef
