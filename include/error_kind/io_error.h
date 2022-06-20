@@ -43,7 +43,7 @@ enum class io_error {
     unsupported,
     unexpected_eof,
     out_of_memory,
-    other
+    other,
 };
 
 } // namespace wingmann::ef::err_kind

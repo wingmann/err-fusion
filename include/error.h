@@ -14,13 +14,11 @@ class error : public error_wrapper<E> {
 
 public:
     error() = default;
-    explicit error(E error_value) : error_{error_value} {}
+    explicit error(E error_value) : error_{error_value} { }
     ~error() override = default;
 
 public:
-    E get() override {
-        return error_;
-    }
+    E get() override { return error_; }
 };
 
 } // namespace wingmann::ef
